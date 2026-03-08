@@ -52,11 +52,11 @@ selection argument and is independent of the recent area-based approach of
 Krishnapur--Lundberg--Ramachandran (2025), who applied
 a Nazarov--Polterovich--Sodin sublevel set bound to establish
 $\rho_n \geq c/(n\sqrt{\log n})$ for all polynomials.
-We further analyze the degenerate case via Blaschke product
-factorizations, identify a structural obstruction for clusters of
-two or more roots, and reduce the full conjecture to the
-non-degeneracy of the inradius minimizer.
-Numerical computations strongly support this reduction.
+We further analyze the squarefree degenerate case via Blaschke product
+factorizations, identify an obstruction to extending the conformal
+method directly to merged components, and show that the full conjecture
+would follow if an inradius minimizer were non-degenerate.
+Preliminary numerics are consistent with this scenario.
 \end{abstract}
 
 \maketitle
@@ -84,7 +84,7 @@ posed the problem of determining the minimal inradius
   \rho_n \;=\; \inf\bigl\{\inrad(\Lambda_P(1)) : P \in \Pn(\overline{\D})\bigr\}.
 \]
 The polynomial $P(z) = z^n - 1$ has $n$ roots at the $n$-th roots of unity
-and yields $\rho(z^n - 1) = \pi/(2n) + O(1/n^2)$, suggesting the conjecture:
+and yields $\inrad(\Lambda_{z^n-1}) \sim \pi/(2n)$, suggesting the conjecture:
 
 \begin{conjecture}[Erd\H{o}s--Herzog--Piranian]
 $\rho_n \asymp 1/n$.
@@ -102,6 +102,10 @@ Their proof applies a Nazarov--Polterovich--Sodin lower bound on the area of
 harmonic sublevel sets with an isoperimetric inequality relating area,
 perimeter, and inradius of lemniscate components.  The $\sqrt{\log n}$ loss
 arises from the square root in the area-to-inradius conversion.
+(Separately, Tao~\cite{Tao25} recently resolved the related
+\emph{length} conjecture from the same 1958 paper, establishing that the
+maximal arclength of $\{\abs{P(z)} = 1\}$ is $\Theta(n)$ for
+sufficiently large $n$.)
 
 In this note, we take a different approach.  We identify a natural class of
 polynomials---those whose critical values all lie outside the open unit
@@ -110,8 +114,8 @@ estimates entirely, using instead the univalent branch structure of $P$
 together with a classical energy bound.  We then analyze the degenerate
 case (where some critical values lie inside $\D$) via Blaschke product
 factorizations, identify a structural obstruction that prevents na\"{\i}ve
-extensions of the conformal method, and reduce the full conjecture to a
-concrete question about the extremal polynomial.
+extensions of the conformal method, and show that the full conjecture
+would follow if some inradius minimizer were non-degenerate.
 
 %% ====================================================================
 \section{Definitions and statement of results}
@@ -143,8 +147,7 @@ More generally, if $P$ has $n$ distinct roots and all roots lie on $\T$,
 then $P \in \Pn^{\mathrm{nd}}(\overline{\D})$ whenever
 $\abs{P(\zeta)} \geq 1$ for each of the $n-1$ critical points.
 Numerical evidence suggests this holds for a wide class of polynomials
-with roots on or near the unit circle, including all area-minimizing
-configurations identified by KLR \cite{KLR25}.
+with roots on or near the unit circle.
 \end{example}
 
 Our main result is:
@@ -157,7 +160,8 @@ Let $P \in \Pn^{\mathrm{nd}}(\overline{\D})$.  Then
 \]
 \end{theorem}
 
-Since $z^n - 1$ is non-degenerate with $\inrad(\Lambda_{z^n-1}) = \pi/(2n)$,
+Since $z^n - 1$ is non-degenerate with $\inrad(\Lambda_{z^n-1}) \sim \pi/(2n)$
+(Proposition~\ref{prop:extremal}),
 the bound has the sharp order $1/n$.
 
 \begin{remark}
@@ -203,9 +207,8 @@ holomorphic function $\psi_j \colon \D \to \C$ such that:
 \end{lemma}
 
 \begin{proof}
-Since $P(z_j) = 0$ and $P'(z_j) \neq 0$ (as $P$ has simple roots at
-generic configurations; the case of repeated roots is treated in
-Remark~\ref{rem:repeated}), the inverse function theorem provides a local
+Since $P(z_j) = 0$ and $P'(z_j) \neq 0$ (non-degeneracy implies simple
+roots by Remark~\ref{rem:repeated}), the inverse function theorem provides a local
 holomorphic branch $\psi_j$ near $w = 0$ with $\psi_j(0) = z_j$.
 
 The branch $\psi_j$ can be continued analytically along any path in $\D$
@@ -275,43 +278,26 @@ Let $z_1, \ldots, z_n \in \overline{\D}$ be distinct.  Then
 Since $P(z) = \prod_{i=1}^n (z - z_i)$, we have
 $P'(z_j) = \prod_{i \neq j} (z_j - z_i)$, and therefore
 \[
-  \sum_{j=1}^n \log\abs{P'(z_j)}
-  \;=\; \sum_{j=1}^n \sum_{i \neq j} \log\abs{z_j - z_i}
-  \;=\; 2 \sum_{1 \leq i < j \leq n} \log\abs{z_i - z_j}.
+  \prod_{j=1}^n \abs{P'(z_j)}
+  \;=\; \prod_{j=1}^n \prod_{i \neq j} \abs{z_j - z_i}
+  \;=\; \Bigl(\prod_{1 \leq i < j \leq n} \abs{z_i - z_j}\Bigr)^2.
 \]
-The right-hand side is twice the logarithmic energy of the point
-configuration.  For $n$ points in $\overline{\D}$, this energy is maximized
-by the $n$-th roots of unity (the classical Fekete problem for the disc),
-yielding the sharp bound
-\begin{equation}\label{eq:fekete}
-  \sum_{1 \leq i < j \leq n} \log\abs{z_i - z_j}
-  \;\leq\; \frac{n}{2}\log n.
-\end{equation}
-To see \eqref{eq:fekete}, note that for the $n$-th roots of unity
-$\omega_k = e^{2\pi ik/n}$:
+Consider the Vandermonde matrix $V = (z_i^{k-1})_{1 \leq i,k \leq n}$,
+so that $\abs{\det V} = \prod_{1 \leq i < j \leq n}\abs{z_j - z_i}$.
+By Hadamard's inequality, $\abs{\det V} \leq \prod_{i=1}^n \norm{r_i}_2$,
+where $r_i = (1, z_i, \ldots, z_i^{n-1})$.  Since $\abs{z_i} \leq 1$,
 \[
-  \prod_{j \neq k} \abs{\omega_k - \omega_j} \;=\; n
-  \qquad\text{for each } k,
+  \norm{r_i}_2^2 \;=\; \sum_{k=0}^{n-1}\abs{z_i}^{2k} \;\leq\; n,
 \]
-since $z^n - 1 = (z - \omega_k)\prod_{j \neq k}(z - \omega_j)$ and
-differentiating gives $nz^{n-1}\big|_{z=\omega_k} = \prod_{j \neq k}(\omega_k - \omega_j)$,
-so $\abs{\prod_{j\neq k}(\omega_k - \omega_j)} = n$.
-Thus each $\log\abs{P'(\omega_k)} = \log n$, and the total energy is
-$n \log n / 2$.  The Schur--Siegel--Smyth--Serre bound (or direct
-variational arguments) confirms this is the global maximum over
-$\overline{\D}$.
+so $\abs{\det V} \leq n^{n/2}$.  Therefore
+\[
+  \prod_{j=1}^n \abs{P'(z_j)} \;\leq\; n^n.
+\]
+The geometric mean of the $\abs{P'(z_j)}$ is at most $n$,
+so $\min_j \abs{P'(z_j)} \leq n$.
 
-Returning to the general case: from \eqref{eq:fekete},
-\[
-  \sum_{j=1}^n \log\abs{P'(z_j)} \;\leq\; n \log n.
-\]
-By the pigeonhole principle,
-\[
-  \min_{1 \leq j \leq n} \log\abs{P'(z_j)}
-  \;\leq\; \frac{1}{n}\sum_{j=1}^n \log\abs{P'(z_j)}
-  \;\leq\; \log n,
-\]
-and exponentiating gives $\min_j \abs{P'(z_j)} \leq n$.
+Equality is attained for the $n$-th roots of unity, where
+$\abs{P'(\omega_k)} = n$ for every $k$, confirming sharpness.
 \end{proof}
 
 %% --------------------------------------------------
@@ -337,23 +323,90 @@ Therefore $\inrad(\Lambda_P(1)) \geq 1/(4n)$.
 %% ====================================================================
 
 \begin{proposition}\label{prop:extremal}
-For $P(z) = z^n - 1$, the bound of Theorem~\ref{thm:main} gives
-$\inrad \geq 1/(4n)$, while the true inradius is $\pi/(2n) + O(1/n^2)$.
+For $P_n(z) = z^n - 1$, one has
+\[
+  \inrad(\Lambda_{P_n}(1)) \;\sim\; \frac{\pi}{2n}
+  \qquad\text{as } n \to \infty.
+\]
+More precisely,
+\[
+  \liminf_{n \to \infty}\, n \cdot \inrad(\Lambda_{P_n}(1)) \;\geq\; \frac{\pi}{2}
+  \qquad\text{and}\qquad
+  \inrad(\Lambda_{P_n}(1)) \;\leq\; \frac{\pi}{2n} + O\!\left(\frac{1}{n^2}\right).
+\]
+In particular, the bound of Theorem~\ref{thm:main} has the sharp order $1/n$.
 \end{proposition}
 
 \begin{proof}
-As noted in Example~\ref{ex:roots-of-unity}, $P$ is non-degenerate.
-Each root $\omega_k = e^{2\pi ik/n}$ satisfies $\abs{P'(\omega_k)} = n$,
-so the Koebe bound gives $\inrad \geq 1/(4n)$.
+By rotational symmetry, $\Lambda_{P_n}(1)$ is the union of $n$ congruent
+components, so it suffices to analyze the component $U_n$ containing $1$.
+On $U_n$ we may use the principal logarithm and write $z = e^{\xi/n}$.
+Then
+\[
+  z \in U_n \iff \abs{e^\xi - 1} < 1 \text{ and } \abs{\mathrm{Im}\,\xi} < \pi/2.
+\]
+Hence $U_n = \exp(\Omega/n)$, where
+\[
+  \Omega \;:=\; \{\xi = x + iy : x < \log(2\cos y),\; \abs{y} < \pi/2\}.
+\]
 
-For the exact inradius, the lemniscate $\{z : \abs{z^n - 1} < 1\}$
-consists of $n$ identical petals, each symmetric about a ray from the origin
-through $\omega_k$.  The $k$-th petal is the image of $\{w : \abs{w - 1} < 1\}$
-under $z \mapsto \omega_k \cdot w^{1/n}$ (locally near $\omega_k$).
-The set $\{w : \abs{w-1} < 1\}$ is a disc of radius $1$ centered at $1$,
-and the map $w \mapsto w^{1/n}$ near $w = 1$ has derivative $1/n$.
-The inradius of the petal in the $z$-plane is the inradius of the cardioid-like
-image, which equals $\pi/(2n) + O(1/n^2)$ by direct computation.
+We first show that $\inrad(\Omega) = \pi/2$.
+Since $\Omega \subset \{\abs{y} < \pi/2\}$, every disc contained in $\Omega$
+has radius at most $\pi/2$, so $\inrad(\Omega) \leq \pi/2$.
+Conversely, let $0 < r < \pi/2$.  Choose $M > r - \log(2\cos r)$.
+If $\abs{\xi + M} < r$, then $\abs{\mathrm{Im}\,\xi} < r$ and
+\[
+  \mathrm{Re}\,\xi \;\leq\; -M + r \;<\; \log(2\cos r)
+  \;\leq\; \log(2\cos(\mathrm{Im}\,\xi)),
+\]
+so $B(-M, r) \subset \Omega$.  Therefore $\inrad(\Omega) \geq r$ for every
+$r < \pi/2$, proving $\inrad(\Omega) = \pi/2$.
+
+\emph{Lower bound on $\inrad(U_n)$.}
+Fix $0 < r < \pi/2$ and choose $M$ as above so that
+$B(-M, r) \subset \Omega$.  Set $a_n = e^{-M/n}$.
+For $\abs{h} \leq r$,
+\[
+  e^{(-M+h)/n} \;=\; a_n\!\left(1 + \frac{h}{n} + R_n(h)\right),
+\]
+where $\abs{R_n(h)} \leq C_r/n^2$ for some constant $C_r$ depending
+only on $r$.  Fix $\varepsilon \in (0, r)$.  If
+$\abs{w - a_n} < a_n(r - \varepsilon)/n$, set
+\[
+  F(h) \;=\; a_n \frac{h}{n} - (w - a_n), \qquad
+  G_n(h) \;=\; a_n R_n(h).
+\]
+On $\abs{h} = r$ we have $\abs{F(h)} \geq a_n \varepsilon/n$ and
+$\abs{G_n(h)} \leq a_n C_r/n^2$.  Hence for all sufficiently large $n$,
+$\abs{G_n(h)} < \abs{F(h)}$ on $\abs{h} = r$.
+By Rouch\'{e}'s theorem, $F + G_n$ has a zero in $\abs{h} < r$, i.e.\
+there exists $\abs{h} < r$ such that $e^{(-M+h)/n} = w$.  Therefore
+\[
+  B\!\left(a_n,\, a_n\frac{r - \varepsilon}{n}\right) \;\subset\; U_n
+\]
+for all large $n$.  Since $a_n = 1 + O(1/n)$,
+$\liminf_{n \to \infty} n \cdot \inrad(U_n) \geq r - \varepsilon$.
+Letting $\varepsilon \downarrow 0$ and then $r \uparrow \pi/2$,
+\[
+  \liminf_{n \to \infty} n \cdot \inrad(U_n) \;\geq\; \frac{\pi}{2}.
+\]
+
+\emph{Upper bound on $\inrad(U_n)$.}
+If $z \in U_n$, then $\abs{z}^n < 2$ and $\abs{\arg z} < \pi/(2n)$.
+Thus $U_n$ is contained in the sector
+$\{z : \abs{\arg z} < \pi/(2n)\}$ and in $\{\abs{z} < 2^{1/n}\}$.
+If $B(z_0, \rho) \subset U_n$, then $\rho$ is at most the distance from
+$z_0$ to the boundary of the sector, hence
+\[
+  \rho \;\leq\; \abs{z_0}\sin\!\left(\frac{\pi}{2n}\right)
+  \;\leq\; 2^{1/n}\sin\!\left(\frac{\pi}{2n}\right)
+  \;=\; \frac{\pi}{2n} + O\!\left(\frac{1}{n^2}\right).
+\]
+
+Combining the bounds gives
+$\inrad(U_n) \leq \pi/(2n) + O(1/n^2)$ and
+$\liminf_{n \to \infty} n \cdot \inrad(U_n) \geq \pi/2$,
+which together yield $\inrad(\Lambda_{P_n}(1)) \sim \pi/(2n)$.
 \end{proof}
 
 %% ====================================================================
@@ -364,15 +417,37 @@ The non-degeneracy condition $\abs{P(\zeta)} \geq 1$ at all critical points
 has a clean potential-theoretic interpretation.  The logarithmic potential
 $u(z) = \log\abs{P(z)}$ satisfies $u(z_j) = -\infty$ at the roots
 and $u(\zeta) \geq 0$ at the critical points.
-Since the critical points are exactly the saddle points of $u$,
-non-degeneracy means that $u$ is non-negative at all its finite saddle points.
-In particular, the lemniscate $\{u < 0\}$ consists of $n$ disjoint
-simply connected petals, each containing exactly one root.
+Away from the roots, the zeros of $P'$ are exactly the critical points
+of $u$; since $u$ is harmonic there, simple critical points are of
+saddle type.
+Non-degeneracy means that $u$ is non-negative at all its finite
+critical points.
+
+\begin{lemma}\label{lem:petals}
+$P$ is non-degenerate if and only if $\Lambda_P(1)$ has
+exactly $n$ connected components, each containing a single simple root.
+\end{lemma}
+
+\begin{proof}
+Every connected component $U$ of $\Lambda_P(1)$ is simply connected
+(if $U$ had a bounded complementary component $H$, then
+$\log\abs{P}$ would be harmonic on $H$ with boundary value $0$,
+forcing $\log\abs{P} \equiv 0$ on $H$, a contradiction).
+The restriction $P|_U \colon U \to \D$ is a proper holomorphic map
+whose degree equals the number of roots in $U$ counted with multiplicity.
+
+$(\Rightarrow)$  If $P$ is non-degenerate, $P$ has no critical values in
+$\D$, so $P|_U$ is an unbranched covering of $\D$.  Since $\D$ is simply
+connected, this covering has degree $1$: each component contains exactly
+one simple root, and there are $n$ components.
+
+$(\Leftarrow)$  If $\Lambda_P(1)$ has $n$ components each with one root,
+then $P|_U$ has degree $1$ on each component, hence no critical points
+in $\Lambda_P(1)$.  Every critical value therefore has modulus $\geq 1$.
+\end{proof}
 
 This structural property---that the lemniscate has $n$ separated petals---is
 essential to our proof and is the geometric content of non-degeneracy.
-Equivalently, $P$ is non-degenerate if and only if $\Lambda_P(1)$ has
-exactly $n$ connected components, each containing a single root.
 
 %% ====================================================================
 \section{Analysis of the degenerate case}
@@ -388,13 +463,31 @@ We present here our analysis of the degenerate case, including both
 positive results and structural obstructions that clarify the difficulty of
 the full EHP conjecture.
 
+\begin{remark}\label{rem:squarefree-degenerate}
+In Sections~\ref{sec:degenerate}--\ref{sec:numerics} we restrict attention
+to squarefree polynomials (i.e., polynomials with simple roots) unless
+explicitly stated otherwise.  This excludes repeated roots, for which the
+formulas involving $P'(z_j)$, Blaschke zeros, and critical-point expansions
+require separate treatment.
+\end{remark}
+
 %% --------------------------------------------------
 \subsection{The conformal factorization}
 %% --------------------------------------------------
 
-Let $\mathcal{C}$ be a connected component of $\Lambda_P(1)$ containing
-$k \geq 2$ roots.  Let $\varphi \colon \D \to \mathcal{C}$ be the
-Riemann map with $\varphi(0) = z_{j^*}$ for a chosen root $z_{j^*}$.
+Assume that $P$ is squarefree.
+Let $z_{j^*}$ be a root satisfying
+\[
+  \abs{P'(z_{j^*})} \;=\; \min_{1 \leq j \leq n} \abs{P'(z_j)}.
+\]
+By Lemma~\ref{lem:fekete}, $\abs{P'(z_{j^*})} \leq n$.
+Let $\mathcal{C}$ be the connected
+component of $\Lambda_P(1)$ containing $z_{j^*}$.
+Suppose $\mathcal{C}$ contains $k \geq 2$ roots (the degenerate case).
+Let $\varphi \colon \D \to \mathcal{C}$ be the
+Riemann map with $\varphi(0) = z_{j^*}$
+(this exists since $\mathcal{C}$ is simply connected, as shown in
+the proof of Lemma~\ref{lem:petals}).
 The composition $B = P \circ \varphi \colon \D \to \D$ is a
 degree-$k$ Blaschke product with $B(0) = 0$.
 
@@ -408,12 +501,14 @@ Since $B(w) = w \prod_{i=2}^k \frac{w - \beta_i}{1 - \bar\beta_i w}$
 evaluating the derivative at $w = 0$ via the product rule gives
 $\abs{B'(0)} = \prod_{i=2}^k \abs{\beta_i}$, where $\beta_2,
 \ldots, \beta_k$ are the $\varphi$-preimages of the other roots in
-$\mathcal{C}$.  Combined with the Fekete selection $\abs{P'(z_{j^*})} \leq n$,
-this yields
+$\mathcal{C}$.  Since $\abs{P'(z_{j^*})} \leq n$,
 \[
   \inrad(\mathcal{C}) \;\geq\;
   \frac{\prod_{i=2}^k \abs{\beta_i}}{4n}.
 \]
+We emphasize that this bound applies to the component containing the
+Fekete-selected root; for an arbitrary component, no such estimate is
+available from the present arguments.
 
 For the degenerate case, the Blaschke zeros $\beta_i$ may cluster
 near the origin, causing $\prod\abs{\beta_i}$ to be small.
@@ -432,20 +527,46 @@ of $P$.  The Koebe bound at $w_c$ gives
   \frac{1}{4}\abs{\varphi'(w_c)}\,(1 - \abs{w_c}^2).
 \end{equation}
 
-If $w_c$ is a simple critical point of $B$, L'H\^{o}pital's rule applied
-to $\varphi'(w) = B'(w)/P'(\varphi(w))$ yields
+To express $\abs{\varphi'(w_c)}$ in terms of the polynomial and Blaschke
+data, we use a local expansion.
+
+\begin{lemma}\label{lem:local-multiplicity}
+Let $\varphi \colon \D \to \mathcal{C}$ be conformal and set
+$B = P \circ \varphi$.  Let $w_c \in \D$ and $\zeta_c = \varphi(w_c)$.
+Then $w_c$ is a critical point of $B$ of multiplicity $m \geq 1$
+if and only if $\zeta_c$ is a critical point of $P$ of multiplicity $m$.
+In that case,
+$B^{(1)}(w_c) = \cdots = B^{(m)}(w_c) = 0$ and
+\begin{equation}\label{eq:faa-di-bruno}
+  B^{(m+1)}(w_c) \;=\; P^{(m+1)}(\zeta_c)\,\varphi'(w_c)^{m+1}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Write the local expansions
+$\varphi(w) = \zeta_c + a(w - w_c) + O((w - w_c)^2)$ with
+$a = \varphi'(w_c) \neq 0$, and
+$P(z) = P(\zeta_c) + c\,(z - \zeta_c)^{m+1} + O((z - \zeta_c)^{m+2})$
+where $c = P^{(m+1)}(\zeta_c)/(m+1)!$.
+Substituting gives
+$B(w) = P(\zeta_c) + c\,a^{m+1}(w - w_c)^{m+1} + O((w - w_c)^{m+2})$,
+which is the claimed statement.
+\end{proof}
+
+\begin{corollary}\label{cor:simple-critical}
+If $w_c$ is a simple critical point of $B$, then $\zeta_c = \varphi(w_c)$
+is a simple critical point of $P$ and
 \begin{equation}\label{eq:lhopital}
   \abs{\varphi'(w_c)}^2 \;=\;
   \frac{\abs{B''(w_c)}}{\abs{P''(\zeta_c)}}.
 \end{equation}
+\end{corollary}
 
-More generally, if $m$ critical points of $B$ merge at $w_c$
-(so that $B'(w_c) = \cdots = B^{(m)}(w_c) = 0$ but
-$B^{(m+1)}(w_c) \neq 0$), the Fa\`{a} di Bruno formula gives
-\begin{equation}\label{eq:faa-di-bruno}
-  \abs{\varphi'(w_c)}^{m+1} \;=\;
-  \frac{\abs{B^{(m+1)}(w_c)}}{\abs{P^{(m+1)}(\zeta_c)}}.
-\end{equation}
+\begin{proof}
+Apply Lemma~\ref{lem:local-multiplicity} with $m = 1$.  Then
+$B''(w_c) = P''(\zeta_c)\,\varphi'(w_c)^2$,
+and taking absolute values gives~\eqref{eq:lhopital}.
+\end{proof}
 
 This cleanly separates the ``microscopic'' Blaschke geometry (the
 numerator) from the ``macroscopic'' polynomial scaling (the denominator).
@@ -469,10 +590,15 @@ a universal lower bound even for two-root components.
 For $k \geq 3$, the same obstruction persists in a stronger form.
 Consider the family of degree-$3$ Blaschke products
 $B_a(w) = w^2 \cdot \frac{w-a}{1-aw}$ for $a \in (0,1)$.
+A direct computation gives
+\[
+  B_a'(w) \;=\; \frac{w\bigl(-2a + (3+a^2)w - 2aw^2\bigr)}{(1-aw)^2}.
+\]
 The point $w_c = 0$ is a critical point with $B_a''(0) = -2a$.
-The second critical point $w_c'$ satisfies $\abs{w_c'} \approx a/3$
-for small $a$, with $\abs{B_a''(w_c')}(1-\abs{w_c'}^2)^2 \approx 2a$
-as well.
+The nonzero critical point $w_c'$ is the small root of the quadratic
+$-2a + (3+a^2)w - 2aw^2 = 0$; for small $a$, this satisfies
+$w_c' = 2a/3 + O(a^3)$.  A direct evaluation then gives
+$\abs{B_a''(w_c')}(1-\abs{w_c'}^2)^2 = 2a + O(a^3)$.
 
 As $a \to 0$, the hyperbolic second derivative at \emph{both}
 critical points tends to zero:
@@ -480,20 +606,22 @@ critical points tends to zero:
   \max_{w_c}\, \abs{B_a''(w_c)}(1-\abs{w_c}^2)^2 \;\to\; 0.
 \]
 Consequently, the conformal radius estimate~\eqref{eq:crit-koebe}
-degenerates, and the approach via Blaschke critical-point invariants
-cannot yield a universal bound for any $k \geq 2$.
+degenerates, and the particular low-order Blaschke critical-point
+invariants considered above do not by themselves yield a universal
+bound for $k \geq 2$.
 
 \begin{remark}
 Geometrically, as $a \to 0$, the Blaschke product approaches
 $B_0(w) = w^3$.  In the limit, the critical point at $0$ has
-multiplicity $2$, and the higher-order formula~\eqref{eq:faa-di-bruno}
+multiplicity $2$, and Lemma~\ref{lem:local-multiplicity}
 gives $\abs{\varphi'(0)}^3 = \abs{B'''(0)}/\abs{P'''(\zeta_c)} = 6/\abs{P'''(\zeta_c)}$,
 which is bounded away from zero.  The obstruction is thus a
 \emph{near-degeneracy} phenomenon: the Blaschke invariants degenerate
 continuously as critical points approach each other, even though they
 ``reset'' at the exact moment of collision via the higher derivative.
-This explains why the degenerate case resists conformal methods that
-rely on evaluating at individual critical points.
+This indicates that a proof for merged components cannot rely solely
+on a uniform lower bound for one distinguished low-order Blaschke
+derivative, though it does not rule out other conformal approaches.
 \end{remark}
 
 %% --------------------------------------------------
@@ -503,7 +631,8 @@ rely on evaluating at individual critical points.
 Despite the Blaschke obstruction, the polynomial structure provides
 useful identities.  Differentiating the logarithmic derivative
 $P'(z)/P(z) = \sum_{j=1}^n 1/(z-z_j)$ and evaluating at a critical
-point $\zeta$ where $P'(\zeta) = 0$, we obtain
+point $\zeta$ where $P'(\zeta) = 0$ and $P(\zeta) \neq 0$
+(i.e., $\zeta$ is not a repeated root), we obtain
 \begin{equation}\label{eq:Ppp-identity}
   P''(\zeta) \;=\; -P(\zeta) \sum_{j=1}^n \frac{1}{(\zeta - z_j)^2}.
 \end{equation}
@@ -512,19 +641,29 @@ This identity cleanly separates local and global contributions:
 roots near $\zeta$ dominate the sum via their large $1/(\zeta-z_j)^2$
 terms, while distant roots contribute negligibly.
 
-Furthermore, since $P'(z) = n\prod_{i=1}^{n-1}(z - \zeta_i)$ where
-$\zeta_1, \ldots, \zeta_{n-1}$ are the critical points, we have
-$\abs{P''(\zeta_i)} = n\prod_{j \neq i}\abs{\zeta_i - \zeta_j}$.
-Applying the same Fekete energy argument as in Lemma~\ref{lem:fekete}
-to the $n-1$ critical points (which lie in $\overline{\D}$ by the
-Gauss--Lucas theorem):
+\begin{lemma}[Dual Fekete bound]\label{lem:dual-fekete}
+Let $P$ be a monic polynomial of degree $n$ with all roots in
+$\overline{\D}$.  If $P'$ has a repeated zero, then
+$\min_{\zeta:\,P'(\zeta)=0}\abs{P''(\zeta)} = 0$.
+Otherwise, if $\zeta_1, \ldots, \zeta_{n-1}$ are the distinct
+critical points of $P$, then
 \begin{equation}\label{eq:dual-fekete}
   \min_{1 \leq i \leq n-1} \abs{P''(\zeta_i)} \;\leq\; n(n-1).
 \end{equation}
-Indeed, $\abs{P''(\zeta_i)} = n\prod_{j \neq i}\abs{\zeta_i - \zeta_j}$,
-and the Fekete bound for $n-1$ points in $\overline{\D}$ gives
-$\sum_{i} \log\prod_{j \neq i}\abs{\zeta_i - \zeta_j} \leq (n-1)\log(n-1)$,
-whence $\min_i \prod_{j\neq i}\abs{\zeta_i - \zeta_j} \leq n-1$.
+\end{lemma}
+
+\begin{proof}
+If $P'$ has a repeated zero, the first claim is immediate.
+Assume now that $P'$ has distinct zeros $\zeta_1, \ldots, \zeta_{n-1}$.
+Since $P'(z) = n\prod_{j=1}^{n-1}(z - \zeta_j)$, we have
+$P''(\zeta_i) = n\prod_{j \neq i}(\zeta_i - \zeta_j)$.
+By the Gauss--Lucas theorem, each $\zeta_i$ lies in $\overline{\D}$.
+Applying Lemma~\ref{lem:fekete} to the $n-1$ points
+$\zeta_1, \ldots, \zeta_{n-1}$ gives
+$\min_i \prod_{j \neq i}\abs{\zeta_i - \zeta_j} \leq n-1$,
+and therefore $\min_i \abs{P''(\zeta_i)} \leq n(n-1)$.
+\end{proof}
+
 This ``dual Fekete bound'' establishes that the critical points are
 subject to the same macroscopic energy constraints as the roots.
 
@@ -533,23 +672,28 @@ subject to the same macroscopic energy constraints as the roots.
 \label{sec:numerics}
 %% --------------------------------------------------
 
-We performed numerical computations of the inradius for
+We computed the inradius for
 $P \in \Pn(\overline{\D})$ with $n = 10$ across several
 hundred random configurations: roots uniformly distributed on $\T$,
 roots in the interior of $\D$, clustered configurations, and
-adversarial searches.  In all cases, the minimum value of
+adversarial gradient searches.  (The inradius was approximated by
+evaluating $\abs{P}$ on a fine polar grid and performing a binary search
+on the radius of the largest inscribed disc.)
+In all cases tested, the minimum value of
 $n \cdot \inrad(\Lambda_P)$ was attained by roots of unity,
-with $n \cdot \rho(z^n - 1) \approx 1.26$.
+with $n \cdot \inrad(\Lambda_{z^{10}-1}) \approx 1.26$.
 
 Degenerate configurations (with roots in the interior) consistently
-exhibited \emph{larger} inradii---typically $n \cdot \rho \geq 4$.
+exhibited \emph{larger} inradii---typically $n \cdot \inrad \geq 4$.
 Even among non-degenerate configurations on $\T$, the roots of unity
-were extremal; perturbing any root away from the uniform spacing
+appeared extremal; perturbing any root away from the uniform spacing
 increased the inradius.
 
-These computations strongly suggest that the inradius minimizer is
-non-degenerate (and in fact equals $z^n - 1$), which would immediately
-imply the full EHP conjecture via Theorem~\ref{thm:main}.
+These observations are consistent with the hypothesis that the inradius
+minimizer is non-degenerate (and in fact equals $z^n - 1$), which would
+immediately imply the full EHP conjecture via Theorem~\ref{thm:main}.
+Since these computations play no role in the proofs, we record
+them only as motivation.
 
 %% ====================================================================
 \section{Comparison with KLR approach}
@@ -582,10 +726,33 @@ estimates that introduce the square root.
 
 We summarize the implications of our analysis for the full EHP conjecture.
 
+\begin{lemma}\label{lem:minimizer}
+For each $n \geq 1$, there exists $P^* \in \Pn(\overline{\D})$ such that
+$\inrad(\Lambda_{P^*}(1)) = \rho_n$.
+\end{lemma}
+
+\begin{proof}
+The parameter space $\overline{\D}^n$ (identifying a monic polynomial
+with its $n$ roots) is compact.  It suffices to show that
+$a \mapsto \inrad(\Lambda_{P_a}(1))$ is continuous.
+All lemniscates are contained in $\{z : \abs{z} \leq 2\}$
+(since $\abs{z} \geq 2$ and $\abs{a_j} \leq 1$ imply
+$\abs{P_a(z)} \geq 1$), so the inradius is bounded.
+Lower semicontinuity follows from uniform convergence of polynomials
+on compact sets: if $B(z_0,r) \subset \Lambda_{P_a}(1)$, then
+$\max_{\overline{B(z_0,r)}}\abs{P_a} < 1$, and for $a'$ sufficiently
+close to $a$, $\abs{P_{a'}} < 1$ on $\overline{B(z_0,r)}$ as well.
+Upper semicontinuity follows similarly: if $\abs{P_{a^{(m)}}} < 1$
+on $B(z_m, r_m)$ with $z_m \to z$ and $r_m \to L$, then
+$\abs{P_a} \leq 1$ on $B(z,r)$ for any $r < L$, hence
+$\abs{P_a} < 1$ by the maximum principle (since $P_a$ is nonconstant).
+A continuous function on a compact set attains its infimum.
+\end{proof}
+
 \begin{proposition}\label{prop:reduction}
 The following implications hold:
 \begin{enumerate}[(i)]
-  \item If the inradius minimizer in $\Pn(\overline{\D})$
+  \item If some inradius minimizer in $\Pn(\overline{\D})$
     is non-degenerate, then the EHP conjecture holds:
     $\rho_n \geq 1/(4n)$.
   \item For every $P \in \Pn(\overline{\D})$, if there exists a
@@ -593,8 +760,8 @@ The following implications hold:
     $k$ roots with $\inrad(\mathcal{C}) \geq c/n$, then
     $\inrad(\Lambda_P(1)) \geq c/n$.
 \end{enumerate}
-In particular, the EHP conjecture is reduced to showing that
-the inradius minimizer is non-degenerate.
+In particular, one sufficient route to the full EHP conjecture is to
+prove that some inradius minimizer is non-degenerate.
 \end{proposition}
 
 \begin{proof}
@@ -616,22 +783,24 @@ Section~\ref{sec:numerics}.
 Our analysis identifies two structural barriers to proving the
 full conjecture directly for degenerate components:
 \begin{enumerate}[(i)]
-  \item The Blaschke critical-point invariants degenerate for
-    $k \geq 2$ (Section~\ref{sec:obstruction}), preventing
-    conformal radius estimates at individual critical points.
+  \item The examples of Section~\ref{sec:obstruction} show that
+    the particular low-order Blaschke critical-point invariants
+    considered here can degenerate for
+    $k \geq 2$, so this line of argument does not by itself yield
+    a universal bound.
   \item The inradius is not monotone under root perturbation
     (unlike area, which decreases under radial pushing by the
-    zero-sweeping lemma of \cite{KLR25}), preventing variational
+    zero-pushing lemma of \cite{KLR25}), preventing variational
     proofs of non-degeneracy for the minimizer.
 \end{enumerate}
 
 We propose three possible routes to the full conjecture:
 \begin{enumerate}
   \item \textbf{Non-degeneracy of minimizers.}
-    Prove that the inradius minimizer satisfies~(c) by
+    Prove that the inradius minimizer is non-degenerate by
     non-variational methods (e.g., direct analysis of the
     extremal conditions).  The numerical evidence of
-    Section~\ref{sec:numerics} strongly supports this.
+    Section~\ref{sec:numerics} is consistent with this.
 
   \item \textbf{Curvature-based width bounds.}
     The total curvature of a degree-$n$ lemniscate boundary
@@ -673,11 +842,6 @@ arXiv:2503.18270 [math.CV], March 2025.
 Ch.~Pommerenke,
 ``On metric properties of complex polynomials,''
 \emph{Michigan Math.\ J.}\ \textbf{8} (1961), 97--115.
-
-\bibitem{SW09}
-A.~Y.~Solynin and A.~S.~Williams,
-``Area and the inradius of lemniscates,''
-\emph{J.\ Math.\ Anal.\ Appl.}\ \textbf{354} (2009), 507--517.
 
 \bibitem{Tao25}
 T.~Tao,
