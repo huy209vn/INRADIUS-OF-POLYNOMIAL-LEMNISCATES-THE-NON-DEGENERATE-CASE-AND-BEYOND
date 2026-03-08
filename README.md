@@ -5,7 +5,6 @@ Lean 4 formalization of the paper "On the Inradius of Polynomial Lemniscates: Th
 ## Build
 
 ```bash
-lake exe cache get
 lake build
 ```
 
